@@ -1,5 +1,9 @@
 #version 450
 
+layout (binding = 0) uniform ParameterUBO {
+    float particleSize;
+} vUbo;
+
 layout(location = 0) in vec2 inPosition;
 layout(location = 1) in vec2 inVelocity;
 
@@ -7,7 +11,7 @@ layout(location = 0) out vec3 fragColor;
 
 void main() {
 
-    gl_PointSize = 3.f;
+    gl_PointSize = vUbo.particleSize;
     gl_Position = vec4(inPosition.xy, 1.0, 1.0);
     const float velocity = length(inVelocity);
     const float maxVelocity = 0.001f;
