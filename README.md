@@ -6,7 +6,7 @@ GPU Particle simulation project to learn to use compute shaders in Vulkan
 I followed the [Vulkan Tutorial](https://vulkan-tutorial.com/Compute_Shader) on compute shaders and built on top of it
 
 Features that I added:
-
+- WIP
 
 ## Instalation
 
