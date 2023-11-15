@@ -94,6 +94,8 @@ struct UniformBufferObject {
     float deltaTime = 1.f;
     float cursorPosX = 0.f;
     float cursorPosY = 0.f;
+    bool followCursor = false;
+    bool padding[3];
 };
 
 struct VertexUBO
@@ -209,6 +211,7 @@ private:
 
     double lastTime = 0.0f;
 
+    bool followCursor = false;
     float cursorPosX = 0.f;
     float cursorPosY = 0.f;
 
@@ -1260,20 +1263,26 @@ private:
 
         ImGuiIO& io = ImGui::GetIO();
 
-        ImGui::SliderFloat("Particle size : ", &particleSize, 1.f, 10.f);
+        ImGui::SliderFloat("Particle size", &particleSize, 1.f, 10.f);
+        ImGui::Checkbox("Follow cursor", &followCursor);
         
-        
-        if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+        if (followCursor)
         {
-            cursorPosX = io.MousePos.x;
-            cursorPosY = io.MousePos.y;
-            cursorPosX /= swapChainExtent.width;
-            cursorPosY /= swapChainExtent.height;
-            cursorPosX *= 2.f;
-            cursorPosX -= 1.f;
-            cursorPosY *= 2.f;
-            cursorPosY -= 1.f;
+            ImGui::TextDisabled("(?)");
+            ImGui::SetItemTooltip("Pull particles towards the cursor when clicking or holding left mouse button");
+            if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+            {
+                cursorPosX = io.MousePos.x;
+                cursorPosY = io.MousePos.y;
+                cursorPosX /= swapChainExtent.width;
+                cursorPosY /= swapChainExtent.height;
+                cursorPosX *= 2.f;
+                cursorPosX -= 1.f;
+                cursorPosY *= 2.f;
+                cursorPosY -= 1.f;
+            }
         }
+        
 
         ImGui::Render();
         ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffer);
@@ -1337,6 +1346,7 @@ private:
         ubo.deltaTime = lastFrameTime * 2.0f;
         ubo.cursorPosX = cursorPosX;
         ubo.cursorPosY = cursorPosY;
+        ubo.followCursor = followCursor;
 
         memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 
