@@ -23,9 +23,9 @@
 #include <set>
 #include <random>
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_vulkan.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_glfw.h"
+#include "ImGui/imgui_impl_vulkan.h"
 
 static void check_vk_result(VkResult err)
 {
