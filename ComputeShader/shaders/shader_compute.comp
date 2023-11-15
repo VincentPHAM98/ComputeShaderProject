@@ -9,6 +9,7 @@ layout (binding = 0) uniform ParameterUBO {
     float deltaTime;
     float cursorPosX;
     float cursorPosY;
+    float cursorPullScale;
     bool followCursor;
     bool padding[3];
 } ubo;
@@ -31,7 +32,7 @@ void main()
 
     particlesOut[index].position = particleIn.position + particleIn.velocity.xy * ubo.deltaTime;
     particlesOut[index].velocity = particleIn.velocity;
-    particlesOut[index].velocity += (ubo.followCursor ? 1 : 0) * normalize(vec2(ubo.cursorPosX, ubo.cursorPosY) - particleIn.position) * 0.0000025f;
+    particlesOut[index].velocity += (ubo.followCursor ? 1 : 0) * normalize(vec2(ubo.cursorPosX, ubo.cursorPosY) - particleIn.position) * ubo.cursorPullScale;
     // particlesOut[index].velocity *= 0.9999f;
     // const float velocity = length(particlesOut[index].velocity);
     // const float maxVelocity = 0.001f;

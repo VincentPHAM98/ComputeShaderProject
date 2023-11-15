@@ -94,6 +94,7 @@ struct UniformBufferObject {
     float deltaTime = 1.f;
     float cursorPosX = 0.f;
     float cursorPosY = 0.f;
+    float cursorPullScale = 0.000001f;
     bool followCursor = false;
     bool padding[3];
 };
@@ -212,6 +213,7 @@ private:
     double lastTime = 0.0f;
 
     bool followCursor = false;
+    float cursorPullScale = 0.000001f;
     float cursorPosX = 0.f;
     float cursorPosY = 0.f;
 
@@ -1281,6 +1283,8 @@ private:
                 cursorPosY *= 2.f;
                 cursorPosY -= 1.f;
             }
+
+            ImGui::SliderFloat("Particle cursor pull scale", &cursorPullScale, 0.f, 0.00001f, "%.9f");
         }
         
 
@@ -1347,6 +1351,7 @@ private:
         ubo.cursorPosX = cursorPosX;
         ubo.cursorPosY = cursorPosY;
         ubo.followCursor = followCursor;
+        ubo.cursorPullScale = cursorPullScale;
 
         memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 
