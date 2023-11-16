@@ -10,8 +10,11 @@ layout (binding = 0) uniform ParameterUBO {
     float cursorPosX;
     float cursorPosY;
     float cursorPullScale;
+
+    float collisionEnergyConservation;
     bool followCursor;
-    bool padding[3];
+    bool paddingB[3];
+    float padding[2];
 } ubo;
 
 layout(std140, binding = 1) readonly buffer ParticleSSBOIn {
@@ -45,21 +48,21 @@ void main()
     // Flip movement at window border
     if ((particlesOut[index].position.x <= -1.0)) {
         particlesOut[index].position.x = -0.9999f;
-        particlesOut[index].velocity.x *= -0.6f; //= -particlesOut[index].velocity.x;
+        particlesOut[index].velocity.x *= -ubo.collisionEnergyConservation;
     }
     if (particlesOut[index].position.x >= 1.0)
     {
         particlesOut[index].position.x = 0.9999f;
-        particlesOut[index].velocity.x *= -0.6f; //= -particlesOut[index].velocity.x;
+        particlesOut[index].velocity.x *= -ubo.collisionEnergyConservation;
     }
     if ((particlesOut[index].position.y <= -1.0)) {
         particlesOut[index].position.y = -0.9999f;
-        particlesOut[index].velocity.y *= -0.6f; //= -particlesOut[index].velocity.y;
+        particlesOut[index].velocity.y *= -ubo.collisionEnergyConservation;
     }
     if (particlesOut[index].position.y >= 1.0)
     {
         particlesOut[index].position.y = 0.9999f;
-        particlesOut[index].velocity.y *= -0.6f; //= -particlesOut[index].velocity.y;
+        particlesOut[index].velocity.y *= -ubo.collisionEnergyConservation;
     }
 
 }

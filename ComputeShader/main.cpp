@@ -95,8 +95,11 @@ struct UniformBufferObject {
     float cursorPosX = 0.f;
     float cursorPosY = 0.f;
     float cursorPullScale = 0.000001f;
+
+    float collisionEnergyConservation = 0.5f;
     bool followCursor = false;
-    bool padding[3];
+    bool paddingB[3];
+    float padding[2];
 };
 
 struct VertexUBO
@@ -212,12 +215,14 @@ private:
 
     double lastTime = 0.0f;
 
+    float particleSize = 1.f;
+
     bool followCursor = false;
     float cursorPullScale = 0.000001f;
     float cursorPosX = 0.f;
     float cursorPosY = 0.f;
 
-    float particleSize = 1.f;
+    float collisionEnergyConservation = 0.5f;
 
     void initWindow() {
         glfwInit();
@@ -1287,6 +1292,8 @@ private:
 
             ImGui::SliderFloat("Particle cursor pull scale", &cursorPullScale, 0.f, 0.00001f, "%.9f");
         }
+
+        ImGui::SliderFloat("Colllision energy conservation", &collisionEnergyConservation, 0.f, 1.f);
         
 
         ImGui::Render();
@@ -1353,6 +1360,7 @@ private:
         ubo.cursorPosY = cursorPosY;
         ubo.followCursor = followCursor;
         ubo.cursorPullScale = cursorPullScale;
+        ubo.collisionEnergyConservation = collisionEnergyConservation;
 
         memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 
