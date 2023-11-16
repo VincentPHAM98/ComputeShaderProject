@@ -1265,13 +1265,14 @@ private:
 
         ImGuiIO& io = ImGui::GetIO();
 
+        ImGui::Text("Number of particles : %d", PARTICLE_COUNT);
+
         ImGui::SliderFloat("Particle size", &particleSize, 1.f, 10.f);
         ImGui::Checkbox("Follow cursor", &followCursor);
         
         if (followCursor)
         {
-            ImGui::TextDisabled("(?)");
-            ImGui::SetItemTooltip("Pull particles towards the cursor when clicking or holding left mouse button");
+            ImGui::Text("Pull particles towards the cursor when clicking or holding left mouse button");
             if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
             {
                 cursorPosX = io.MousePos.x;
