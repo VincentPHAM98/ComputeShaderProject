@@ -1278,7 +1278,7 @@ private:
         if (followCursor)
         {
             ImGui::Text("Pull particles towards the cursor when clicking or holding left mouse button");
-            if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+            if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGui::GetIO().WantCaptureMouse)
             {
                 cursorPosX = io.MousePos.x;
                 cursorPosY = io.MousePos.y;
