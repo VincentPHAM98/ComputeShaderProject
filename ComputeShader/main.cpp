@@ -105,6 +105,7 @@ struct UniformBufferObject {
 struct VertexUBO
 {
     float particleSize = 1.f;
+    float colorMaxVelocity = 0.001f;
 };
 
 struct Particle {
@@ -216,6 +217,7 @@ private:
     double lastTime = 0.0f;
 
     float particleSize = 1.f;
+    float colorMaxVelocity = 0.001f;
 
     bool followCursor = false;
     float cursorPullScale = 0.000001f;
@@ -1273,6 +1275,7 @@ private:
         ImGui::Text("Number of particles : %d", PARTICLE_COUNT);
 
         ImGui::SliderFloat("Particle size", &particleSize, 1.f, 10.f);
+        ImGui::SliderFloat("Color max velocity", &colorMaxVelocity, 0.f, 0.01f, "%.4f");
         ImGui::Checkbox("Follow cursor", &followCursor);
         
         if (followCursor)
@@ -1366,6 +1369,7 @@ private:
 
         VertexUBO vUbo{};
         vUbo.particleSize = particleSize;
+        vUbo.colorMaxVelocity = colorMaxVelocity;
 
         memcpy(vertexUniformBuffersMapped[currentImage], &vUbo, sizeof(vUbo));
     }
